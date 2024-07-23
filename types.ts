@@ -7,4 +7,13 @@ export interface NoticeInfo {
   url: string;
 }
 
+export interface NoCategoryNoticeInfo {
+  title: string;
+  date: string;
+  writer: string;
+  content: string;
+  url: string;
+  category: string;
+}
+
 export type KupidType = "Scholar" | "Notice" | "Schedule";

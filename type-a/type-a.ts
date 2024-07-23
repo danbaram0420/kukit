@@ -1,27 +1,5 @@
-export interface TypeANotice {
-  title: string;
-  date: string;
-  writer: string;
-  content: string;
-  url: string;
-  category: string;
-}
-
-/**
- * @param url fetch할 URL
- * @returns fetch 결과를 반환합니다.
- */
-//fetch 실패뿐만 아니라 fetch 결과가 ok가 아닐 경우에도 에러를 던지기 위한 함수
-export async function fetchWithError(url: string): Promise<Response> {
-  try {
-    const scrap = await fetch(url);
-    if (!scrap.ok) throw Error("Failed to fetch");
-    return scrap;
-  } catch {
-    throw Error("Failed to fetch");
-  }
-}
-
+import type { NoCategoryNoticeInfo } from "../types.ts";
+import { fetchWithError } from "../utils.ts";
 /**
  * @param html fetch로 받아온 HTML
  * @param url 기본 사이트 URL
@@ -114,7 +92,7 @@ export function getWriter(article: string, name: string): string {
 export function parseArticle(
   article: string,
   tag: { title: string; date: string },
-): TypeANotice {
+): NoCategoryNoticeInfo {
   return {
     title: getTitle(article, tag.title),
     date: getDate(article, tag.date),

@@ -32,7 +32,10 @@ export interface KupidSessionAuth {
   sessionId: string;
 }
 
-export async function getToken(id: string, password: string): Promise<KupidSessionAuth> {
+export async function getToken(
+  id: string,
+  password: string,
+): Promise<KupidSessionAuth> {
   const {
     id: idKey,
     password: passwordKey,
@@ -117,4 +120,19 @@ export function parseSetCookie(cookie: string) {
   const [kv] = cookie.split(";");
   const [key, value] = kv.split("=");
   return { key, value };
+}
+
+/**
+ * @param url fetch할 URL
+ * @returns fetch 결과를 반환합니다.
+ */
+//fetch 실패뿐만 아니라 fetch 결과가 ok가 아닐 경우에도 에러를 던지기 위한 함수
+export async function fetchWithError(url: string): Promise<Response> {
+  try {
+    const scrap = await fetch(url);
+    if (!scrap.ok) throw Error("Failed to fetch");
+    return scrap;
+  } catch {
+    throw Error("Failed to fetch");
+  }
 }
