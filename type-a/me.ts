@@ -20,10 +20,7 @@ export enum MeCategory {
  * @param category 탐색할 카테고리 번호, 0: 일반(학부 및 대학원, 취업정보는 해당없음), 1: 학부, 2: 대학원, 3: 취업정보
  * @returns 해당 페이지의 공지사항 URL 리스트를 반환합니다.
  */
-export async function getMeUrlList(
-  listnum: number,
-  category: MeCategory,
-): Promise<string[]> {
+export async function getMeUrlList(listnum: number, category: MeCategory): Promise<string[]> {
   const meCategory = category != MeCategory.Job ? "undernotice" : "job";
   if (!meCategory) throw Error("Invalid category number");
   const mainUrl = category != 3
@@ -40,10 +37,7 @@ export async function getMeUrlList(
  * @returns 공지사항의 제목, 작성자, 게시일자, public URL, HTML table body, 카테고리 내용을 반환합니다.
  * 이 함수를 부를 때 순서는 1,2->0,3 추천. 일반은 취업정보 제외한 모든 게시글을 불러와 카테고리 구분이 안되기 때문.
  */
-export async function fetchMeNotices(
-  url: string,
-  mainCategory: MeCategory,
-): Promise<NoCategoryNoticeInfo> {
+export async function fetchMeNotices(url: string, mainCategory: MeCategory): Promise<NoCategoryNoticeInfo> {
   const scrap = await fetchWithError(url);
   const html = await scrap.text();
   const article = convertRelativeFilePath(html, "https://me.korea.ac.kr");
