@@ -17,17 +17,13 @@ export enum JapCategory {
  * @param category 카테고리 번호, 1: 학부, 2: 대학원, 3: 취업정보
  * @returns 해당 페이지의 href 리스트를 반환합니다.
  */
-export async function getJapUrlList(
-  page: number,
-  category: JapCategory,
-): Promise<string[]> {
+export async function getJapUrlList(page: number, category: JapCategory): Promise<string[]> {
   const catenum = {
     1: "005003001",
     2: "005003002",
     3: "005008",
   }[category];
-  const subUrl =
-    `http://www.kujap.com/contents/bbs/bbs_list.html?bbs_cls_cd=${catenum}`;
+  const subUrl = `http://www.kujap.com/contents/bbs/bbs_list.html?bbs_cls_cd=${catenum}`;
   const phpId = await getPHPSessionId(subUrl);
   const mainUrl = subUrl + `&pagemove=GOTO&pageno=${page}`;
   const headers = new Headers({
@@ -50,10 +46,7 @@ export async function getJapUrlList(
  * @param url getJapUrlList 함수에서 반환된 url 하나
  * @returns 공지사항의 제목, 작성자, 게시일자, public URL, HTML table body, 카테고리 내용을 반환합니다.
  */
-export async function fetchJapNotices(
-  url: string,
-  mainCategory: JapCategory,
-): Promise<NoCategoryNoticeInfo> {
+export async function fetchJapNotices(url: string, mainCategory: JapCategory): Promise<NoCategoryNoticeInfo> {
   const scrap = await fetchWithError(url);
   const html = await eucKrToUtf8(scrap);
 
@@ -170,9 +163,7 @@ function getFile(utf8Html: string): string {
  * @param html fetch로 받아온 후 utf-8로 변환한 공지의 HTML string
  * @returns 반환 형식인 NoCategoryNoticeInfo에 파싱된 정보들을 담아 반환합니다.
  */
-function parseArticle(
-  html: string,
-): NoCategoryNoticeInfo {
+function parseArticle(html: string): NoCategoryNoticeInfo {
   return {
     title: getTitle(html),
     date: getDate(html),
