@@ -136,3 +136,14 @@ export async function fetchWithError(url: string): Promise<Response> {
     throw Error("Failed to fetch");
   }
 }
+
+/**
+ * @param eucKr fetchWithError나 fetch로 받은 결과(Response 타입), 인코딩 형식 euc-kr
+ * @returns utf-8로 변환된 string
+ */
+export async function eucKrToUtf8(response: Response): Promise<string> {
+  const arrayBuffer = await response.arrayBuffer();
+  const decoder = new TextDecoder("euc-kr");
+  const decoded = decoder.decode(arrayBuffer);
+  return decoded;
+}
