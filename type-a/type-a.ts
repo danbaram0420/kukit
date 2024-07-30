@@ -16,10 +16,7 @@ export function convertRelativeFilePath(html: string, url: string): string {
  * @param form href에 붙는 form ex:undernotice_view 등
  * @returns 해당 페이지의 href 리스트를 반환합니다.
  */
-export async function getTypeAUrlList(
-  url: string,
-  form: string,
-): Promise<string[]> {
+export async function getTypeAUrlList(url: string, form: string): Promise<string[]> {
   const scrap = await fetchWithError(url);
   const html = await scrap.text();
   const regex = new RegExp(`${form}\\.html\\?no=([0-9]+)`, "g");
@@ -60,15 +57,10 @@ function getDate(article: string, form: string): string {
  * @returns 공지의 content를 반환합니다.
  */
 function getContent(article: string): string {
-  const rawMain = article.match(
-    /<div class="contents_info">(.+)<div class="file_info">/s,
-  );
-  const rawFile = article.match(
-    /<div class="file_info">(.+)<div class="list_info">/s,
-  );
+  const rawMain = article.match(/<div class="contents_info">(.+)<div class="file_info">/s,);
+  const rawFile = article.match(/<div class="file_info">(.+)<div class="list_info">/s,);
   if (!rawMain || !rawFile) throw Error("Failed to get content");
-  const content = rawMain[0].replace(/<div class="file_info">/, "") +
-    rawFile[0].replace(/<div class="list_info">/, "");
+  const content = rawMain[0].replace(/<div class="file_info">/, "") + rawFile[0].replace(/<div class="list_info">/, "");
   return content;
 }
 
@@ -89,10 +81,7 @@ export function getWriter(article: string, name: string): string {
  * @param tag title과 date의 html tag를 담은 객체
  * @returns title, date, content가 담긴 TypeANotice 객체를 반환합니다.
  */
-export function parseArticle(
-  article: string,
-  tag: { title: string; date: string },
-): NoCategoryNoticeInfo {
+export function parseArticle(article: string, tag: { title: string; date: string }): NoCategoryNoticeInfo {
   return {
     title: getTitle(article, tag.title),
     date: getDate(article, tag.date),
