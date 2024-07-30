@@ -20,10 +20,7 @@ export enum EeCategory {
  * @param category 탐색할 카테고리 번호, 1: 학부, 2: 대학원, 3: 취업정보
  * @returns 해당 페이지의 공지사항 URL 리스트를 반환합니다.
  */
-export async function getEeUrlList(
-  page: number,
-  category: EeCategory,
-): Promise<string[]> {
+export async function getEeUrlList(page: number,category: EeCategory): Promise<string[]> {
   const eeCategory = {
     1: "undernotice",
     2: "gradnotice",
@@ -41,10 +38,7 @@ export async function getEeUrlList(
  * @param mainCategory 탐색중인 카테고리 번호, 1: 학부, 2: 대학원, 3: 취업정보
  * @returns 공지사항의 제목, 작성자, 게시일자, public URL, HTML table body, 카테고리 내용을 반환합니다.
  */
-export async function fetchEeNotices(
-  url: string,
-  mainCategory: EeCategory,
-): Promise<NoCategoryNoticeInfo> {
+export async function fetchEeNotices(url: string,mainCategory: EeCategory): Promise<NoCategoryNoticeInfo> {
   const scrap = await fetchWithError(url);
   const html = await scrap.text();
   const article = convertRelativeFilePath(html, "https://ee.korea.ac.kr");
