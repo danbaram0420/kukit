@@ -138,7 +138,7 @@ export async function fetchWithError(url: string): Promise<Response> {
 }
 
 /**
- * @param eucKr fetchWithError나 fetch로 받은 결과(Response 타입), 인코딩 형식 euc-kr
+ * @param response fetchWithError나 fetch로 받은 결과(Response 타입), 인코딩 형식 euc-kr
  * @returns utf-8로 변환된 string
  */
 export async function eucKrToUtf8(response: Response): Promise<string> {
