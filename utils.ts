@@ -32,10 +32,7 @@ export interface KupidSessionAuth {
   sessionId: string;
 }
 
-export async function getToken(
-  id: string,
-  password: string,
-): Promise<KupidSessionAuth> {
+export async function getToken(id: string, password: string): Promise<KupidSessionAuth> {
   const {
     id: idKey,
     password: passwordKey,
